@@ -96,7 +96,7 @@ public class MyFileDatabase {
   }
 
   /** The path to the file containing the database entries. */
-  private String filePath;
+  private final String filePath;
 
   /** The mapping of department names to Department objects. */
   private Map<String, Department> departmentMapping;
