@@ -1,10 +1,5 @@
-Bugs that I found using PMD:
-------------------------------------------------------------------------------------------------------------------------
-    LooseCoupling
-        - Where: 20+ instances of this error
-        - Why: Interface preferred over specified declaration
-        - Example: HashMap deptMap = new HashMap... -> Map deptMap = new HashMap...
-        - Fixed: Yes, however this seems more like preference than anything
+Bugs that I found using PMD application:
+-------------------------------------------------
 
     UnnecessaryAnnotationValueElement
         - Where: 17 individual instances
@@ -12,23 +7,29 @@ Bugs that I found using PMD:
         - Example: (@RequestParam(value = "deptCode") String deptCode) -> (@RequestParam("deptCode") String deptCode)
         - Fixed: Yes, all 17 instances have been corrected to ensure convention
 
-    UseLocaleWithCaseConversions
-        - Where: RouteController.java:48,RouteController.java:45
-        - Why: When doing a String.toLowerCase()/toUpperCase() call, we use a Locale to insure consistency
-        - Example: deptCode.toUpperCase() -> deptCode.toUpperCase(Locale.ENGLISH)
-        - Fixed: Yes, both instances have been corrected
+    LooseCoupling
+        - Where: 20+ instances of this error
+        - Why: Interface preferred over specified declaration
+        - Example: HashMap deptMap = new HashMap... -> Map deptMap = new HashMap...
+        - Fixed: Yes, however this seems more like preference than anything
 
-    Missing Override
-        - Where: Department.java:102, Course.java:65
-        - Why: Overrides the default toString() that would not suffice for either case do to specific needs outlined
-        - Example: @Override toString() {...
-        - Fixed: Yes, both refracted, no complications
+    ReturnEmptyCollectionRatherThanNull
+        - Where: MyFileDatabase.java:54
+        - Why: Incorrect return type
+        - Example: return null; -> return HashMap<>();
+        - Fixed: Yes, single instance was corrected
 
     LiteralsFirstComparison
         - Where: IndividualProjectApplication.java:41
         - Why: Prevents a null pointer from occurring
         - Example: arg.equals("setup") -> "setup".equals(arg)
         - Fixed: Yes, single instance was corrected
+
+    UseLocaleWithCaseConversions
+        - Where: RouteController.java:48,RouteController.java:45
+        - Why: When doing a String.toLowerCase()/toUpperCase() call, we use a Locale to insure consistency
+        - Example: deptCode.toUpperCase() -> deptCode.toUpperCase(Locale.ENGLISH)
+        - Fixed: Yes, both instances have been corrected
 
     UnusedLocalVariable:
         - Where: RouteController.java:291
@@ -39,7 +40,7 @@ Bugs that I found using PMD:
                 String courseTime = requestedCourse.getCourseTimeSlot();
         - Fixed: Yes, but only after acknowledgment of the next issue as well
 
-     Logical Error:
+    Logical Error:
         - Where: ""
         - Why: It looks as though someone might have pseudo-coded this method and neglected to replace the temp
         string holding "some time " with real data from the requestedCourse. In this case, the placeholder string
@@ -47,11 +48,12 @@ Bugs that I found using PMD:
         - Example: ("The course meets at: " + "some time "... -> ("The course meets at: " + timeSlot ...
         - Fixed: Yes, fully functional
 
-    ReturnEmptyCollectionRatherThanNull
-        - Where: MyFileDatabase.java:54
-        - Why: Incorrect return type
-        - Example: return null; -> return HashMap<>();
-        - Fixed: Yes, single instance was corrected
+    Missing Override
+        - Where: Department.java:102, Course.java:65
+        - Why: Overrides the default toString() that would not suffice for either case do to specific needs outlined
+        - Example: @Override toString() {...
+        - Fixed: Yes, both refracted, no complications
+
 
     Note:
     There was one or two bugs I noticed all the way back to "Code Clean Up". These were conspicuous. This
@@ -61,19 +63,21 @@ Bugs that I found using PMD:
 
 
 Bugs I found through assessment/analysis:
-------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------
+
     Casting Error
         - Where: MyFileDatabase.java:48
         - Why: The cast was unchecked, I'm not really sure why this is giving me a warning though, as the 'if
-        statement' insures that the type is indeed checked beforehand
+        statement' insures that the type is indeed checked beforehand... so it is checked
         - Example: Added @SuppressWarnings("unchecked")
-        - Fixed: Not confident
+        - Fixed: Not confident, but added
 
-    Random Minus Sign
-        - Where: RouteController.java:152
-        - Why: This just looks like a typo
-        - Example: Self explanatory
-        - Fixed: Yes
+    Absence of If/Else Statement
+        - Where: Course.java:34 & Course.java:48
+        - Why: There was no way to deal with when there is a mex or min on the current capacity so I added if/else
+        statements to make sure that it didnt go below zero or above the max capacity.
+        - Example: if (enrollmentCapacity > enrolledStudentCount) {...
+        - Fixed: Fixed for both enrollStudent() and dropStudent
 
     Incorrect HTTPStatus Call
         - Where: RouteController.java:553
@@ -81,15 +85,42 @@ Bugs I found through assessment/analysis:
         - Example: HttpStatus.OK -> HttpStatus.NOT_FOUND
         - Fixed: Fixed
 
+    Random Minus Sign
+        - Where: RouteController.java:152
+        - Why: This just looks like a typo
+        - Example: Self explanatory
+        - Fixed: Yes, fixed
+
+    Added Javadoc Comments
+        - Where: Mostly in Course.java but also one in RouteController.java
+        - Why: Standard to have them for every method. Most of them did not have a comment
+        - Example: See Course.java
+        - Fixed: Yes, but not really a "bug"
+
+    Edited Javadoc Comment
+        - Where: Course.getCourseLocation()
+        - Why: It was basically just a c/p from the method above it - not accurate
+        - Example: @return true -> @return courseLocation
+        - Fixed: ""
+
+    Renamed Method
+        - Where: Course.java:138
+        - Why: The original method name was not very good
+        - Example: See changed method name
+        - Fixed: Yes, fixed and makes more sense now
+
+
     Note:
     IndividualProjectApplication.java has logic errors. There are several instances where the enrollment is
     higher that the course capacity at conception of the course/department. However, this was left as is and
     ignored due to the instructions in the file.
 
-    Final Note:
-    There were several errors that I might have automatically fixed without even noticing while trying to
-    understand the code that I have neglected to put here. This is because I did not know originally that this
-    text file would be required and that the bug fixing was much more structured. If this is a problem in the
-    future I will make sure to log all my changes as I go and/or go through my old commits to look for my changes.
+
+-------------------------------------------------
+Final Note:
+There were several errors that I might have automatically fixed without even noticing while trying to
+understand the code that I have neglected to put here. This is because I did not know originally that this
+text file would be required and that the bug fixing was much more structured. If this is a problem in the
+future I will make sure to log all my changes as I go and/or go through my old commits to look for my changes.
 
 

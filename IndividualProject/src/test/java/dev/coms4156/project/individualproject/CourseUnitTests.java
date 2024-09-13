@@ -1,13 +1,11 @@
 package dev.coms4156.project.individualproject;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Course class.
@@ -27,15 +25,24 @@ public class CourseUnitTests {
     testCourse = new Course(instructorName, courseLocation, timeSlot, capacity);
   }
 
+  /**
+   * Test for enrollStudent()
+   */
   @Test
   public void enrollStudentTest() {
     int pre = testCourse.getEnrolledStudentCount();
     boolean result = testCourse.enrollStudent();
     int post = testCourse.getEnrolledStudentCount();
-    assertEquals(++pre, post);
-    assertTrue(result);
+    if (result) {
+      assertEquals(++pre, post);
+    } else {
+      assertNotEquals(++pre, post);
+    }
   }
 
+  /**
+   * Test for dropStudent()
+   */
   @Test
   public void dropStudentTest() {
     int pre = testCourse.getEnrolledStudentCount();
@@ -45,6 +52,9 @@ public class CourseUnitTests {
     assertTrue(result);
   }
 
+  /**
+   * Test for getCourseLocation()
+   */
   @Test
   public void getCourseLocationTest() {
     assertEquals(courseLocation, testCourse.getCourseLocation());

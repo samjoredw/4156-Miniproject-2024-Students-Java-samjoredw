@@ -32,8 +32,12 @@ public class Course implements Serializable {
    * @return true if the student is successfully enrolled, false otherwise.
    */
   public boolean enrollStudent() {
-    enrolledStudentCount++;
-    return true;
+    if (enrollmentCapacity > enrolledStudentCount) {
+      enrolledStudentCount++;
+      return true;
+    } else {
+      return false;
+    }
   }
 
   /**
@@ -42,54 +46,95 @@ public class Course implements Serializable {
    * @return true if the student is successfully dropped, false otherwise.
    */
   public boolean dropStudent() {
-    enrolledStudentCount--;
-    return true;
+    if (enrolledStudentCount > 0) {
+      enrolledStudentCount--;
+      return true;
+    } else {
+      return false;
+    }
   }
 
-
+  /**
+   * Gets the course location associated with the course.
+   *
+   * @return courseLocation
+   */
   public String getCourseLocation() {
     return this.courseLocation;
   }
 
-
+  /**
+   * Gets the instructor's name associated with the course.
+   *
+   * @return instructorName
+   */
   public String getInstructorName() {
     return this.instructorName;
   }
 
-
+  /**
+   * Gets the time slot associated with the course.
+   *
+   * @return coursrTimeSlot
+   */
   public String getCourseTimeSlot() {
     return this.courseTimeSlot;
   }
 
+  /**
+   * Returns a string representation of the course.
+   *
+   * @return A string representing the course.
+   */
   @Override
   public String toString() {
     return "\nInstructor: " + instructorName +  "; Location: "  + courseLocation
         +  "; Time: " + courseTimeSlot;
   }
 
-
+  /**
+   * Reassigns the instructor of a course.
+   */
   public void reassignInstructor(String newInstructorName) {
     this.instructorName = newInstructorName;
   }
 
-
+  /**
+   * Reassigns the location of a course.
+   */
   public void reassignLocation(String newLocation) {
     this.courseLocation = newLocation;
   }
 
-
+  /**
+   * Reassigns the time slot of a course.
+   */
   public void reassignTime(String newTime) {
     this.courseTimeSlot = newTime;
   }
 
+  /**
+   * Gets the number of students currently enrolled.
+   *
+   * @return enrolledStudentCount
+   */
   public int getEnrolledStudentCount() {
     return enrolledStudentCount;
   }
 
+  /**
+   * Sets the number of students currently enrolled.
+   */
   public void setEnrolledStudentCount(int count) {
     this.enrolledStudentCount = count;
   }
 
+
+  /**
+   * Determines if the course is available.
+   *
+   * @return true if the course is available
+   */
   public boolean isCourseAvailable() { // Renamed: As the original did not make sense logically
     return enrollmentCapacity > enrolledStudentCount;
   }

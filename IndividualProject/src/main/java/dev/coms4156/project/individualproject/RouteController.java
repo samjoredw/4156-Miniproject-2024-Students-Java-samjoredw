@@ -548,6 +548,13 @@ public class RouteController {
     }
   }
 
+  /**
+   * Exception handler used throughout the class.
+   *
+   * @param e                         an exception
+   *
+   * @return                          a ResponseEntity with a NOT_FOUND tag
+   */
   private ResponseEntity<?> handleException(Exception e) {
     System.out.println(e.toString());
     return new ResponseEntity<>("An Error has occurred", HttpStatus.NOT_FOUND);
