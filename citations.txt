@@ -1,0 +1,24 @@
+Here are the outside resources that I used:
+
+For navigating IntelliJ:
+https://www.jetbrains.com/help/idea/debugging-your-first-java-application.html
+
+For Javadoc syntax:
+https://www.oracle.com/technical-resources/articles/java/javadoc-tool.html
+https://google.github.io/styleguide/javaguide.html
+
+For debugging:
+https://pmd.github.io/
+
+	$ cd <location of PMD>
+	$ ./pmd check -d /Users/samjoredw/ADV_SOFTWARE/4156-Miniproject-2024-Students-Java-samjoredw/IndividualProject -R rulesets/java/quickstart.xml -f text
+	$ # output will be shown here
+
+For Test Suite coverage:
+https://www.jacoco.org/jacoco/trunk/index.html#:~:text=JaCoCo%20is%20a%20free%20Java,under%20the%20Eclipse%20Public%20License
+
+	$ cd <top dir>
+	$ mvn test
+	$ mvn jacoco:report
+	$ open target/site/jacoco/index.html
+	$ # linked will be shown here
