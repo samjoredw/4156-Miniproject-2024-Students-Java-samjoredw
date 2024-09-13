@@ -29,6 +29,9 @@ public class MyFileDatabaseUnitTest {
     unserializedFileDatabase = new MyFileDatabase(1, "./data.txt");
   }
 
+  /**
+   * Test for setMapping()()
+   */
   @Test
   public void setMappingTest() {
     Map<String, Department> departmentHashMap = new HashMap<>();
@@ -42,6 +45,9 @@ public class MyFileDatabaseUnitTest {
     assertEquals(departmentHashMap, unserializedFileDatabase.getDepartmentMapping());
   }
 
+  /**
+   * The test MyFileDatabase instance and test data used for unit testing.
+   */
   public static MyFileDatabase serializedFileDatabase;
   public static MyFileDatabase unserializedFileDatabase;
 }

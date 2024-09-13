@@ -40,21 +40,33 @@ public class DepartmentUnitTest {
     testDepartment = new Department(deptCode, courses, departmentChair, numberOfMajors);
   }
 
+  /**
+   * Test for getNumberOfMajors()
+   */
   @Test
   public void getNumberOfMajorsTest() {
     assertEquals(testDepartment.getNumberOfMajors(), numberOfMajors);
   }
 
+  /**
+   * Test for getDepartmentChair()
+   */
   @Test
   public void getDepartmentChairTest() {
     assertEquals(testDepartment.getDepartmentChair(), departmentChair);
   }
 
+  /**
+   * Test for getCourseSelection()
+   */
   @Test
   public void getCourseSelectionTest() {
     assertEquals(courses, testDepartment.getCourseSelection());
   }
 
+  /**
+   * Test for addPersonToMayor()
+   */
   @Test
   public void addPersonToMajorTest() {
     int pre = testDepartment.getNumberOfMajors();
@@ -63,6 +75,9 @@ public class DepartmentUnitTest {
     assertEquals(pre + 1, post);
   }
 
+  /**
+   * Test for dropPersonFromMajor()
+   */
   @Test
   public void dropPersonFromMajorTest() {
     int pre = testDepartment.getNumberOfMajors();
@@ -71,6 +86,9 @@ public class DepartmentUnitTest {
     assertEquals(pre - 1, post);
   }
 
+  /**
+   * Test for addCourse()
+   */
   @Test
   public void addCourseTest() {
     Course newCourse = addCourseTestHelper();
@@ -80,6 +98,9 @@ public class DepartmentUnitTest {
     assertEquals(newCourse, newMap.get("3157"));
   }
 
+  /**
+   * Test for createCourse()
+   */
   @Test
   public void createCourseTest() {
     testDepartment.createCourse("3203", "Ansaf Salleb-Aouissi", "301 URIS",
@@ -88,6 +109,9 @@ public class DepartmentUnitTest {
     assertTrue(newMap.containsKey("3203"));
   }
 
+  /**
+   * Test for toString()
+   */
   @Test
   public void toStringTest() {
     String deptTestString = toStringTestHelper();
@@ -95,10 +119,16 @@ public class DepartmentUnitTest {
     assertEquals(deptToString, deptTestString);
   }
 
+  /**
+   * Helper for addCourseTest()
+   */
   private Course addCourseTestHelper() {
     return new Course("Jae Lee", "820 MUDD", "10:10-11:25", 250);
   }
 
+  /**
+   * Helper for toString()
+   */
   private String toStringTestHelper() {
     return deptCode + ": " + departmentChair + "\n"
         + deptCode + " 3251: " + coms3251.toString() + "\n"

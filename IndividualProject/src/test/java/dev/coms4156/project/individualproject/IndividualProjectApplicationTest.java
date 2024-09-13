@@ -11,20 +11,35 @@ import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the IndividualProjectApplication class.
+ *
+ * <p>Tests include verifying various methods within the
+ * IndividualProjectApplication classes.
+ */
 @SpringBootTest
 @ContextConfiguration
 public class IndividualProjectApplicationTest {
 
+  /**
+   * Defines and initializes courses to a new test department.
+   */
   @BeforeEach
   public void createNewApplication() {
     testApplication = new IndividualProjectApplication();
   }
 
+  /**
+   * Test for main()
+   */
   @Test
   public void mainMethodTest() {
     IndividualProjectApplication.main(new String[]{});
   }
 
+  /**
+   * Test for run() - setup option
+   */
   @Test
   public void runWithSetupTest() {
     String[] setup = {"setup"};
@@ -32,6 +47,9 @@ public class IndividualProjectApplicationTest {
     assertNotNull(IndividualProjectApplication.myFileDatabase);
   }
 
+  /**
+   * Test for run() - without setup option
+   */
   @Test
   public void runWithoutSetupTest() {
     String[] setup = {};
@@ -39,6 +57,9 @@ public class IndividualProjectApplicationTest {
     assertNotNull(IndividualProjectApplication.myFileDatabase);
   }
 
+  /**
+   * Test for overrideDatabase()
+   */
   @Test
   public void overrideDatabaseTest() {
     MyFileDatabase empty = new MyFileDatabase(1, "nothingOnPurpose.txt");
@@ -51,6 +72,9 @@ public class IndividualProjectApplicationTest {
         (Objects.requireNonNull(myFileDatabaseMap).isEmpty() && emptyMap.isEmpty()));
   }
 
+  /**
+   * Test for resetDataFile()
+   */
   @Test
   public void resetDataFileTest() {
     IndividualProjectApplication.myFileDatabase = getMyFileDatabaseHelper();
@@ -62,6 +86,9 @@ public class IndividualProjectApplicationTest {
     assertNotEquals(beforeReset.getDepartmentMapping(), afterReset.getDepartmentMapping());
   }
 
+  /**
+   * Helper for resetDataFileTest()
+   */
   private static MyFileDatabase getMyFileDatabaseHelper() {
     MyFileDatabase myFileDatabase = new MyFileDatabase(1, "nothingOnPurpose.txt");
     Course sam1234 = new Course(
@@ -77,6 +104,9 @@ public class IndividualProjectApplicationTest {
     return myFileDatabase;
   }
 
+  /**
+   * The test IndividualProjectApplication instance and test data used for unit testing.
+   */
   public IndividualProjectApplication testApplication;
   public IndividualProjectApplication testApplication2;
 
