@@ -1,5 +1,6 @@
 package dev.coms4156.project.individualproject;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,63 @@ public class RouteController {
 
          http:127.0.0.1:8080/endpoint?arg=value""";
   }
+
+  /**
+   * Returns the details of courses associated with specified course code.
+   *
+   * @param courseCode A {@code String} representing the department the user wishes
+   *                 to retrieve.
+   *
+   * @return A {@code ResponseEntity} object containing either the details of the courses and
+   *         an HTTP 200 response or, an appropriate message indicating the proper response.
+   */
+  @GetMapping(value = "/retrieveCoursesWithCourseCode", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> retrieveCoursesWithCourseCode(@RequestParam("courseCode") String courseCode) {
+
+    Map<String, Department> departmentMapping;
+    departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
+
+    HashMap<String, Course> matchedCourses = getMatchingCourseCode(departmentMapping, courseCode);
+
+    if (!matchedCourses.isEmpty()) {
+      String response = null;
+
+      for (Map.Entry<String, Course> course : matchedCourses.entrySet()) {
+        response = "Department: " + course.getKey() +
+            "\nCourse Info: " + course.toString();
+      }
+
+      return new ResponseEntity<>(response, HttpStatus.OK);
+    } else {
+      String errorMessage = "No courses with code " + courseCode;
+      return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+  }
+
+  /**
+   * Helper method to find courses with the specified course code in all departments.
+   *
+   * @param departmentMap The map of department codes to Department objects.
+   * @param courseCode    The code of the course to search for.
+   * @return              A HashMap where the keys are department codes and the values are the matching Course objects.
+   */
+  private HashMap<String, Course> getMatchingCourseCode(Map<String, Department> departmentMap, String courseCode) {
+    HashMap<String, Course> matchedCourses = new HashMap<>();
+
+    for (Map.Entry<String, Department> entry : departmentMap.entrySet()) {
+      String deptCode = entry.getKey();
+      Department department = entry.getValue();
+      Map<String, Course> coursesMapping = department.getCourseSelection();
+
+      if (coursesMapping.containsKey(courseCode)) {
+        Course foundCourse = coursesMapping.get(courseCode);
+        matchedCourses.put(deptCode, foundCourse);
+      }
+    }
+
+    return matchedCourses;
+  }
+
 
   /**
    * Returns the details of the specified department.
