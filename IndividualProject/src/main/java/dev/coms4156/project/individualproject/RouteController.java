@@ -77,15 +77,50 @@ public class RouteController {
     for (Map.Entry<String, Department> entry : departmentMap.entrySet()) {
       String deptCode = entry.getKey();
       Department department = entry.getValue();
-      Map<String, Course> coursesMapping = department.getCourseSelection();
+      Map<String, Course> courses = department.getCourseSelection();
 
-      if (coursesMapping.containsKey(courseCode)) {
-        Course foundCourse = coursesMapping.get(courseCode);
+      if (courses.containsKey(courseCode)) {
+        Course foundCourse = courses.get(courseCode);
         matchedCourses.put(deptCode, foundCourse);
       }
     }
 
     return matchedCourses;
+  }
+
+  /**
+   * Attempts to enroll a student in the specified course.
+   *
+   * @param deptCode   A {@code String} representing the department the user wishes to enroll the student in.
+   *
+   * @param courseCode A {@code String} representing the course the user wishes to enroll the student in.
+   *
+   * @return A {@code ResponseEntity} object containing either the details of the courses and
+   *         an HTTP 200 response or, an appropriate message indicating the proper response.
+   */
+  @GetMapping(value = "/enrollStudentInCourse", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<?> enrollStudentInCourse(@RequestParam("deptCode") String deptCode,
+                                         @RequestParam("courseCode") String courseCode) {
+
+    Map<String, Department> departments = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
+
+    if (!departments.containsKey(deptCode)) {
+      return new ResponseEntity<>("Incorrect Dept Code", HttpStatus.NOT_FOUND);
+    }
+    Department department = departments.get(deptCode);
+
+    Map<String, Course> courses = department.getCourseSelection();
+    if (!courses.containsKey(courseCode)) {
+      return new ResponseEntity<>("Incorrect Course Code", HttpStatus.NOT_FOUND);
+    }
+
+    Course course = courses.get(courseCode);
+    if (course.enrollStudent()) {
+      return new ResponseEntity<>("Student enrolled: " + course.getEnrolledStudentCount()
+              + " students now enrolled in the course.", HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>("Cannot enroll student.", HttpStatus.BAD_REQUEST);
+    }
   }
 
 
@@ -105,7 +140,7 @@ public class RouteController {
       departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
 
       if (!departmentMapping.containsKey(deptCode.toUpperCase(Locale.ENGLISH))) {
-        return new ResponseEntity<>("Department Not Found", HttpStatus.OK);
+        return new ResponseEntity<>("Incorrect Dept Code", HttpStatus.BAD_REQUEST);
       } else {
         return new ResponseEntity<>(
             departmentMapping.get(deptCode.toUpperCase(Locale.ENGLISH)).toString(), HttpStatus.OK);
