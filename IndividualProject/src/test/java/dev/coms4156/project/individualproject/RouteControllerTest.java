@@ -41,7 +41,7 @@ public class RouteControllerTest {
    */
   @Test
   public void retrieveCoursesWithCourseCodeTest() {
-    ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("3251");
+    ResponseEntity<?> realOutput =  routeController.retrieveCoursesWithCourseCode("3251");
     String testOutput = """
         Department: COMS
         Course Info: COMS=
@@ -52,14 +52,14 @@ public class RouteControllerTest {
   }
 
   /**
-   * Test for retrieveCoursesWithoutCourseCodeTest() with invalid course code.
+   * Test for retrieveCoursesWithoutCourseCodeTest().
    */
   @Test
   public void retrieveCoursesWithoutCourseCodeTest() {
-    ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("NONE");
+    ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("RANDOM-FAKE");
 
     assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
-    assertEquals("No courses with code NONE", realOutput.getBody());
+    assertEquals("No courses with code RANDOM-FAKE", realOutput.getBody());
   }
 
   /**
@@ -138,7 +138,7 @@ public class RouteControllerTest {
   }
 
   /**
-   * Test for retrieveFakeCourseTest() when the course does not exist.
+   * Test for retrieveFakeCourseTest().
    */
   @Test
   public void retrieveFakeCourseTest() {
@@ -146,6 +146,131 @@ public class RouteControllerTest {
 
     assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
     assertEquals("Course Not Found", realOutput.getBody());
+  }
+
+  /**
+   * Test for isCourseFullTrueTest().
+   */
+  @Test
+  public void isCourseFullTrueTest() {
+    coms3251.setEnrolledStudentCount(99);
+    ResponseEntity<?> realOutput = routeController.isCourseFull("COMS", 3251);
+    boolean expectedOutput = true;
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for isCourseFullFalseTest().
+   */
+  @Test
+  public void isCourseFullFalseTest() {
+    coms3251.setEnrolledStudentCount(125);
+    ResponseEntity<?> realOutput = routeController.isCourseFull("COMS", 3251);
+    boolean expectedOutput = false;
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for findCourseInstructorTest().
+   */
+  @Test
+  public void findCourseInstructorTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseInstructor("COMS", 3251);
+    String expectedOutput = "Tony Dear is the instructor for the course.";
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for findCourseInstructorFakeDepartmentTest().
+   */
+  @Test
+  public void findCourseInstructorFakeDepartmentTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseInstructor("FAKE", 3251);
+    String expectedOutput = "Course Not Found";
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for findCourseInstructorFakeCourseTest().
+   */
+  @Test
+  public void findCourseInstructorFakeCourseTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseInstructor("COMS", 78547802);
+
+    String expectedOutput = "Course Not Found";
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for findCourseLocation().
+   */
+  @Test
+  public void findCourseLocationTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseLocation("COMS", 3251);
+    String expectedOutput = "402 CHANDLER is where the course is located.";
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for findCourseLocationFakeDepartmentTest().
+   */
+  @Test
+  public void findCourseLocationFakeDepartmentTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseLocation("RADNOM-FAKE", 3251);
+    String expectedOutput = "Course Not Found";
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+
+  }
+
+  /**
+   * Test for findCourseLocationFakeCourseTest().
+   */
+  @Test
+  public void findCourseLocationFakeCourseTest() {
+    ResponseEntity<?> realOutput = routeController.findCourseLocation("COMS", 98349);
+    String expectedOutput = "Course Not Found";
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+
+  /**
+   * Test for getMajorCtFromDept().
+   */
+  @Test
+  public void getMajorCtFromDeptTest() {
+    ResponseEntity<?> realOutput = routeController.getMajorCtFromDept("COMS");
+    String expectedOutput = "There are: 2700 majors in the department";
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for getMajorCtFromDeptFakeTest().
+   */
+  @Test
+  public void getMajorCtFromDeptFakeTest() {
+    ResponseEntity<?> realOutput = routeController.getMajorCtFromDept("RANDOM-FAKE");
+    String expectedOutput = "Department Not Found";
+
+    assertEquals(HttpStatus.FORBIDDEN, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
   }
 
   /**
