@@ -2,8 +2,8 @@ package dev.coms4156.project.individualproject;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.TreeMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Represents a department within an educational institution.

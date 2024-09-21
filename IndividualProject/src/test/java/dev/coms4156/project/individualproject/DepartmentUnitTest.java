@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,7 +40,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for getNumberOfMajors()
+   * Test for getNumberOfMajors().
    */
   @Test
   public void getNumberOfMajorsTest() {
@@ -49,7 +48,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for getDepartmentChair()
+   * Test for getDepartmentChair().
    */
   @Test
   public void getDepartmentChairTest() {
@@ -57,7 +56,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for getCourseSelection()
+   * Test for getCourseSelection().
    */
   @Test
   public void getCourseSelectionTest() {
@@ -65,7 +64,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for addPersonToMayor()
+   * Test for addPersonToMayor().
    */
   @Test
   public void addPersonToMajorTest() {
@@ -76,7 +75,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for dropPersonFromMajor()
+   * Test for dropPersonFromMajor().
    */
   @Test
   public void dropPersonFromMajorTest() {
@@ -87,7 +86,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for addCourse()
+   * Test for addCourse().
    */
   @Test
   public void addCourseTest() {
@@ -99,7 +98,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for createCourse()
+   * Test for createCourse().
    */
   @Test
   public void createCourseTest() {
@@ -110,7 +109,7 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Test for toString()
+   * Test for toString().
    */
   @Test
   public void toStringTest() {
@@ -120,14 +119,14 @@ public class DepartmentUnitTest {
   }
 
   /**
-   * Helper for addCourseTest()
+   * Helper for addCourseTest().
    */
   private Course addCourseTestHelper() {
     return new Course("Jae Lee", "820 MUDD", "10:10-11:25", 250);
   }
 
   /**
-   * Helper for toString()
+   * Helper for toString().
    */
   private String toStringTestHelper() {
     return deptCode + ": " + departmentChair + "\n"
