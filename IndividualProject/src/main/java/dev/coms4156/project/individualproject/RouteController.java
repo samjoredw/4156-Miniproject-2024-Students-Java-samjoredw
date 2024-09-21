@@ -42,7 +42,8 @@ public class RouteController {
    *         an HTTP 200 response or, an appropriate message indicating the proper response.
    */
   @GetMapping(value = "/retrieveCoursesWithCourseCode", produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<?> retrieveCoursesWithCourseCode(@RequestParam("courseCode") String courseCode) {
+  public ResponseEntity<?> retrieveCoursesWithCourseCode(
+      @RequestParam("courseCode") String courseCode) {
 
     Map<String, Department> departmentMapping;
     departmentMapping = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
@@ -53,8 +54,8 @@ public class RouteController {
       String response = null;
 
       for (Map.Entry<String, Course> course : matchedCourses.entrySet()) {
-        response = "Department: " + course.getKey() +
-            "\nCourse Info: " + course.toString();
+        response = "Department: " + course.getKey()
+            + "\nCourse Info: " + course.toString();
       }
 
       return new ResponseEntity<>(response, HttpStatus.OK);
@@ -69,9 +70,11 @@ public class RouteController {
    *
    * @param departmentMap The map of department codes to Department objects.
    * @param courseCode    The code of the course to search for.
-   * @return              A HashMap where the keys are department codes and the values are the matching Course objects.
+   * @return              A HashMap where the keys are department codes and
+   *                      the values are the matching Course objects.
    */
-  private HashMap<String, Course> getMatchingCourseCode(Map<String, Department> departmentMap, String courseCode) {
+  private HashMap<String, Course> getMatchingCourseCode(
+      Map<String, Department> departmentMap, String courseCode) {
     HashMap<String, Course> matchedCourses = new HashMap<>();
 
     for (Map.Entry<String, Department> entry : departmentMap.entrySet()) {
@@ -91,18 +94,22 @@ public class RouteController {
   /**
    * Attempts to enroll a student in the specified course.
    *
-   * @param deptCode   A {@code String} representing the department the user wishes to enroll the student in.
+   * @param deptCode   A {@code String} representing the department the user
+   *                   wishes to enroll the student in.
    *
-   * @param courseCode A {@code String} representing the course the user wishes to enroll the student in.
+   * @param courseCode A {@code String} representing the course the user
+   *                   wishes to enroll the student in.
    *
-   * @return A {@code ResponseEntity} object containing either the details of the courses and
-   *         an HTTP 200 response or, an appropriate message indicating the proper response.
+   * @return A {@code ResponseEntity} object containing either the
+   *        details of the courses and an HTTP 200 response or, an appropriate
+   *        message indicating the proper response.
    */
   @GetMapping(value = "/enrollStudentInCourse", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> enrollStudentInCourse(@RequestParam("deptCode") String deptCode,
-                                         @RequestParam("courseCode") String courseCode) {
+                                                 @RequestParam("courseCode") String courseCode) {
 
-    Map<String, Department> departments = IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
+    Map<String, Department> departments =
+        IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
 
     if (!departments.containsKey(deptCode)) {
       return new ResponseEntity<>("Incorrect Dept Code", HttpStatus.NOT_FOUND);

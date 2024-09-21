@@ -1,15 +1,16 @@
 package dev.coms4156.project.individualproject;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 /**
  * Unit tests for the IndividualProjectApplication class.
@@ -30,7 +31,7 @@ public class IndividualProjectApplicationTest {
   }
 
   /**
-   * Test for main()
+   * Test for main().
    */
   @Test
   public void mainMethodTest() {
@@ -38,7 +39,7 @@ public class IndividualProjectApplicationTest {
   }
 
   /**
-   * Test for run() - setup option
+   * Test for run() - setup option.
    */
   @Test
   public void runWithSetupTest() {
@@ -48,7 +49,7 @@ public class IndividualProjectApplicationTest {
   }
 
   /**
-   * Test for run() - without setup option
+   * Test for run() - without setup option.
    */
   @Test
   public void runWithoutSetupTest() {
@@ -58,7 +59,7 @@ public class IndividualProjectApplicationTest {
   }
 
   /**
-   * Test for overrideDatabase()
+   * Test for overrideDatabase().
    */
   @Test
   public void overrideDatabaseTest() {
@@ -68,12 +69,12 @@ public class IndividualProjectApplicationTest {
         IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
     Map<String, Department> emptyMap =
         IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
-    assertTrue((myFileDatabaseMap == null && emptyMap == null) ||
-        (Objects.requireNonNull(myFileDatabaseMap).isEmpty() && emptyMap.isEmpty()));
+    assertTrue((myFileDatabaseMap == null && emptyMap == null)
+        || (Objects.requireNonNull(myFileDatabaseMap).isEmpty() && emptyMap.isEmpty()));
   }
 
   /**
-   * Test for resetDataFile()
+   * Test for resetDataFile().
    */
   @Test
   public void resetDataFileTest() {
@@ -87,10 +88,10 @@ public class IndividualProjectApplicationTest {
   }
 
   /**
-   * Helper for resetDataFileTest()
+   * Helper for resetDataFileTest().
    */
   private static MyFileDatabase getMyFileDatabaseHelper() {
-    MyFileDatabase myFileDatabase = new MyFileDatabase(1, "nothingOnPurpose.txt");
+    final MyFileDatabase myFileDatabase = new MyFileDatabase(1, "nothingOnPurpose.txt");
     Course sam1234 = new Course(
         "Sam Edwards", "600 SAM", "1:00-11:45", 1);
     sam1234.setEnrolledStudentCount(420);

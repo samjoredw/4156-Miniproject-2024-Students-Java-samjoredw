@@ -1,11 +1,14 @@
 package dev.coms4156.project.individualproject;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Unit tests for the Course class.
@@ -26,7 +29,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for enrollStudent()
+   * Test for enrollStudent().
    */
   @Test
   public void enrollStudentTest() {
@@ -41,7 +44,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for dropStudent()
+   * Test for dropStudent().
    */
   @Test
   public void dropStudentTest() {
@@ -53,7 +56,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for getCourseLocation()
+   * Test for getCourseLocation().
    */
   @Test
   public void getCourseLocationTest() {
@@ -61,7 +64,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for setEnrolledStudentCount()
+   * Test for setEnrolledStudentCount().
    */
   @Test
   public void setEnrolledStudentCountTest() {
@@ -71,7 +74,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for getInstructorName()
+   * Test for getInstructorName().
    */
   @Test
   public void getInstructorNameTest() {
@@ -79,7 +82,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for getCourseTimeSlot()
+   * Test for getCourseTimeSlot().
    */
   @Test
   public void getCourseTimeSlotTest() {
@@ -87,7 +90,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for reassignInstructor()
+   * Test for reassignInstructor().
    */
   @Test
   public void reassignInstructorTest() {
@@ -97,7 +100,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for reassignLocation()
+   * Test for reassignLocation().
    */
   @Test
   public void reassignLocationTest() {
@@ -107,7 +110,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for reassignTime()
+   * Test for reassignTime().
    */
   @Test
   public void reassignTimeTest() {
@@ -117,7 +120,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for isCourseFull()
+   * Test for isCourseFull().
    */
   @Test
   public void isCourseFullTest() {
@@ -135,7 +138,7 @@ public class CourseUnitTests {
   }
 
   /**
-   * Test for toString()
+   * Test for toString().
    */
   @Test
   public void toStringTest() {

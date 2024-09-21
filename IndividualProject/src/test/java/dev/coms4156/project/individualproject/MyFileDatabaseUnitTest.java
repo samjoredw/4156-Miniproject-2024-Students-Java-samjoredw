@@ -1,10 +1,9 @@
 package dev.coms4156.project.individualproject;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,7 +29,7 @@ public class MyFileDatabaseUnitTest {
   }
 
   /**
-   * Test for setMapping()()
+   * Test for setMapping().
    */
   @Test
   public void setMappingTest() {
