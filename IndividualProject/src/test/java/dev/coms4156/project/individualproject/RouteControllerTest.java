@@ -37,32 +37,6 @@ public class RouteControllerTest {
   }
 
   /**
-   * Test for retrieveCoursesWithCourseCodeTest().
-   */
-  @Test
-  public void retrieveCoursesWithCourseCodeTest() {
-    ResponseEntity<?> realOutput =  routeController.retrieveCoursesWithCourseCode("3251");
-    String testOutput = """
-        Department: COMS
-        Course Info: COMS=
-        Instructor: Tony Dear; Location: 402 CHANDLER; Time: 1:10-3:40""";
-
-    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
-    assertEquals(testOutput, realOutput.getBody());
-  }
-
-  /**
-   * Test for retrieveCoursesWithoutCourseCodeTest().
-   */
-  @Test
-  public void retrieveCoursesWithoutCourseCodeTest() {
-    ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("RANDOM-FAKE");
-
-    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
-    assertEquals("No courses with code RANDOM-FAKE", realOutput.getBody());
-  }
-
-  /**
    * Test for enrollStudentInCourseTest().
    */
   @Test
@@ -71,57 +45,6 @@ public class RouteControllerTest {
     String expectedOutput = "Student enrolled: 100 students now enrolled in the course.";
 
     assertEquals(HttpStatus.OK, realOutput.getStatusCode());
-    assertEquals(expectedOutput, realOutput.getBody());
-  }
-
-  /**
-   * Test for enrollStudentInCourseFullTest().
-   */
-  @Test
-  public void enrollStudentInCourseFullTest() {
-    coms3251.setEnrolledStudentCount(300);
-    ResponseEntity<?> realOutput = routeController.enrollStudentInCourse("COMS", "3251");
-    String expectedOutput = "Cannot enroll student.";
-
-    assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
-    assertEquals(expectedOutput, realOutput.getBody());
-  }
-
-  /**
-   * Test for dropStudentFromCourseTest().
-   */
-  @Test
-  public void dropStudentFromCourseTest() {
-    System.out.println(coms3251.getEnrolledStudentCount());
-    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
-    String expectedOutput = "Student has been dropped.";
-    System.out.println(coms3251.getEnrolledStudentCount());
-
-    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
-    assertEquals(expectedOutput, realOutput.getBody());
-  }
-
-  /**
-   * Test for dropStudentFromFakeCourseTest().
-   */
-  @Test
-  public void dropStudentFromFakeCourseTest() {
-    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 1023495);
-
-    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
-    assertEquals("Course Not Found", realOutput.getBody());
-  }
-
-  /**
-   * Test for dropStudentFromEmptyCourseTest().
-   */
-  @Test
-  public void dropStudentFromEmptyCourseTest() {
-    coms3251.setEnrolledStudentCount(0);
-    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
-    String expectedOutput = "Student has not been dropped.";
-
-    assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
     assertEquals(expectedOutput, realOutput.getBody());
   }
 
@@ -146,6 +69,32 @@ public class RouteControllerTest {
 
     assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
     assertEquals("Course Not Found", realOutput.getBody());
+  }
+
+  /**
+   * Test for retrieveCoursesWithCourseCodeTest().
+   */
+  @Test
+  public void retrieveCoursesWithCourseCodeTest() {
+    ResponseEntity<?> realOutput =  routeController.retrieveCoursesWithCourseCode("3251");
+    String testOutput = """
+        Department: COMS
+        Course Info: COMS=
+        Instructor: Tony Dear; Location: 402 CHANDLER; Time: 1:10-3:40""";
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(testOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for retrieveCoursesWithoutCourseCodeTest().
+   */
+  @Test
+  public void retrieveCoursesWithoutCourseCodeTest() {
+    ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("RANDOM-FAKE");
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals("No courses with code RANDOM-FAKE", realOutput.getBody());
   }
 
   /**
@@ -272,6 +221,58 @@ public class RouteControllerTest {
     assertEquals(HttpStatus.FORBIDDEN, realOutput.getStatusCode());
     assertEquals(expectedOutput, realOutput.getBody());
   }
+
+  /**
+   * Test for enrollStudentInCourseFullTest().
+   */
+  @Test
+  public void enrollStudentInCourseFullTest() {
+    coms3251.setEnrolledStudentCount(300);
+    ResponseEntity<?> realOutput = routeController.enrollStudentInCourse("COMS", "3251");
+    String expectedOutput = "Cannot enroll student.";
+
+    assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromCourseTest().
+   */
+  @Test
+  public void dropStudentFromCourseTest() {
+    System.out.println(coms3251.getEnrolledStudentCount());
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
+    String expectedOutput = "Student has been dropped.";
+    System.out.println(coms3251.getEnrolledStudentCount());
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromFakeCourseTest().
+   */
+  @Test
+  public void dropStudentFromFakeCourseTest() {
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 1023495);
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals("Course Not Found", realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromEmptyCourseTest().
+   */
+  @Test
+  public void dropStudentFromEmptyCourseTest() {
+    coms3251.setEnrolledStudentCount(0);
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
+    String expectedOutput = "Student has not been dropped.";
+
+    assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
 
   /**
    * The test route controller instance and test data used for unit testing.
