@@ -70,8 +70,8 @@ public class RouteController {
    *
    * @param departmentMap The map of department codes to Department objects.
    * @param courseCode    The code of the course to search for.
-   * @return              A HashMap where the keys are department codes and
-   *                      the values are the matching Course objects.
+   * @return              A HashMap where the keys are department codes and the
+   *                      values are the matching Course objects.
    */
   private HashMap<String, Course> getMatchingCourseCode(
       Map<String, Department> departmentMap, String courseCode) {
@@ -94,19 +94,19 @@ public class RouteController {
   /**
    * Attempts to enroll a student in the specified course.
    *
-   * @param deptCode   A {@code String} representing the department the user
-   *                   wishes to enroll the student in.
+   * @param deptCode   A {@code String} representing the department the
+   *                   user wishes to enroll the student in.
    *
    * @param courseCode A {@code String} representing the course the user
    *                   wishes to enroll the student in.
    *
    * @return A {@code ResponseEntity} object containing either the
-   *        details of the courses and an HTTP 200 response or, an appropriate
-   *        message indicating the proper response.
+   *          details of the courses and an HTTP 200 response or, an
+   *          appropriate message indicating the proper response.
    */
   @GetMapping(value = "/enrollStudentInCourse", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> enrollStudentInCourse(@RequestParam("deptCode") String deptCode,
-                                                 @RequestParam("courseCode") String courseCode) {
+                                         @RequestParam("courseCode") String courseCode) {
 
     Map<String, Department> departments =
         IndividualProjectApplication.myFileDatabase.getDepartmentMapping();
@@ -187,9 +187,8 @@ public class RouteController {
           return new ResponseEntity<>("Course Not Found", HttpStatus.NOT_FOUND);
         } else {
           return new ResponseEntity<>(coursesMapping.get(Integer.toString(courseCode)).toString(),
-              HttpStatus.FORBIDDEN);
+              HttpStatus.OK);
         }
-
       }
       return new ResponseEntity<>("Department Not Found", HttpStatus.NOT_FOUND);
     } catch (Exception e) {

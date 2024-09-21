@@ -27,14 +27,11 @@ public class RouteControllerTest {
   @BeforeEach
   public void setupRouteController() {
     routeController = new RouteController();
-
     coms3251 = new Course("Tony Dear", "402 CHANDLER", "1:10-3:40", 125);
     coms3251.setEnrolledStudentCount(99);
     courses = new HashMap<>();
     courses.put("3251", coms3251);
-
     testDepartment = new Department(deptCode, courses, departmentChair, numberOfMajors);
-
     IndividualProjectApplication.myFileDatabase.getDepartmentMapping()
         .put(deptCode, testDepartment);
   }
@@ -44,9 +41,7 @@ public class RouteControllerTest {
    */
   @Test
   public void retrieveCoursesWithCourseCodeTest() {
-
     ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("3251");
-
     String testOutput = """
         Department: COMS
         Course Info: COMS=
@@ -61,10 +56,8 @@ public class RouteControllerTest {
    */
   @Test
   public void retrieveCoursesWithoutCourseCodeTest() {
-    // Call the method with an invalid course code
     ResponseEntity<?> realOutput = routeController.retrieveCoursesWithCourseCode("NONE");
 
-    // Verify that the response is NOT_FOUND
     assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
     assertEquals("No courses with code NONE", realOutput.getBody());
   }
@@ -74,9 +67,7 @@ public class RouteControllerTest {
    */
   @Test
   public void enrollStudentInCourseTest() {
-
     ResponseEntity<?> realOutput = routeController.enrollStudentInCourse("COMS", "3251");
-
     String expectedOutput = "Student enrolled: 100 students now enrolled in the course.";
 
     assertEquals(HttpStatus.OK, realOutput.getStatusCode());
@@ -88,14 +79,73 @@ public class RouteControllerTest {
    */
   @Test
   public void enrollStudentInCourseFullTest() {
-
     coms3251.setEnrolledStudentCount(300);
     ResponseEntity<?> realOutput = routeController.enrollStudentInCourse("COMS", "3251");
-
     String expectedOutput = "Cannot enroll student.";
 
     assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
     assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromCourseTest().
+   */
+  @Test
+  public void dropStudentFromCourseTest() {
+    System.out.println(coms3251.getEnrolledStudentCount());
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
+    String expectedOutput = "Student has been dropped.";
+    System.out.println(coms3251.getEnrolledStudentCount());
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromFakeCourseTest().
+   */
+  @Test
+  public void dropStudentFromFakeCourseTest() {
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 1023495);
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals("Course Not Found", realOutput.getBody());
+  }
+
+  /**
+   * Test for dropStudentFromEmptyCourseTest().
+   */
+  @Test
+  public void dropStudentFromEmptyCourseTest() {
+    coms3251.setEnrolledStudentCount(0);
+    ResponseEntity<?> realOutput = routeController.dropStudent("COMS", 3251);
+    String expectedOutput = "Student has not been dropped.";
+
+    assertEquals(HttpStatus.BAD_REQUEST, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for retrieveCourseTest().
+   */
+  @Test
+  public void retrieveCourseTest() {
+    ResponseEntity<?> realOutput = routeController.retrieveCourse("COMS", 3251);
+    String expectedOutput = coms3251.toString();
+
+    assertEquals(HttpStatus.OK, realOutput.getStatusCode());
+    assertEquals(expectedOutput, realOutput.getBody());
+  }
+
+  /**
+   * Test for retrieveFakeCourseTest() when the course does not exist.
+   */
+  @Test
+  public void retrieveFakeCourseTest() {
+    ResponseEntity<?> realOutput = routeController.retrieveCourse("COMS", 9837431);
+
+    assertEquals(HttpStatus.NOT_FOUND, realOutput.getStatusCode());
+    assertEquals("Course Not Found", realOutput.getBody());
   }
 
   /**
